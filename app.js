@@ -4,10 +4,12 @@ const app = express();
 const connect = require("./models");
 connect();
 
+const config = require("./config");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const config = require("./config");
+app.use("/uploads", express.static("uploads"));
 
 const index = require("./api/routes");
 app.use("/api", index);
