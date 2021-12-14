@@ -1,20 +1,10 @@
 .env
 
-<<<<<<< Updated upstream
-# dependencies
-/node_modules
-
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
 
 package-lock.json
-=======
+
 # Logs
 logs
 *.log
