@@ -33,12 +33,12 @@ const postSchema = new mongoose.Schema({
         default: 0,
     },
     createdAt: {
-        type: Date,
+        type: String,
         required: true,
         default: Date(),
     },
     updatedAt: {
-        type: Date,
+        type: String,
     },
 });
 

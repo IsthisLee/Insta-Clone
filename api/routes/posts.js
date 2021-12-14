@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const { deleteOne } = require("../../models/posts");
 const router = express.Router();
 const Posts = require("../../models/posts");
 //const Comments = require("../../models/comments");
@@ -53,7 +54,52 @@ router
 
 router
     .route("/postlist/:postId")
-    .put(async (req, res) => {})
-    .delete(async (req, res) => {});
+    .put(async (req, res) => {
+        const { postId } = req.params;
+        const { userId, content, imgUrl } = req.body;
+
+        try {
+            const post = await Posts.findOne({ postId: postId });
+            if (post.userId !== userId) {
+                return res.status(412).json({
+                    errorMessage: "본인 게시글만 수정 가능합니다.",
+                });
+            }
+            await Posts.updateOne(
+                { postId: postId },
+                {
+                    $set: {
+                        content: content,
+                        imgUrl: imgUrl,
+                        updatedAt: Date(),
+                    },
+                }
+            );
+            res.send();
+        } catch {
+            res.status(400).json({
+                errorMessage: "게시글 수정 중 오류 발생",
+            });
+        }
+    })
+    .delete(async (req, res) => {
+        const { postId } = req.params;
+        const { userId } = req.body;
+
+        try {
+            const post = await Posts.findOne({ postId: postId });
+            if (post.userId !== userId) {
+                return res.status(412).json({
+                    errorMessage: "본인 게시글만 삭제 가능합니다.",
+                });
+            }
+            await Posts.deleteOne({ postId: postId });
+            res.send();
+        } catch {
+            res.status(400).json({
+                errorMessage: "게시글 삭제 중 오류 발생",
+            });
+        }
+    });
 
 module.exports = router;
