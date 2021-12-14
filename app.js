@@ -15,5 +15,5 @@ const index = require("./api/routes");
 app.use("/api", index);
 
 app.listen(config.port, () => {
-    console.log(`listening at http://localhost:${config.port}`);
+  console.log(`listening at http://localhost:${config.port}`);
 });

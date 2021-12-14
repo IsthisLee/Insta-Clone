@@ -3,7 +3,7 @@ const router = express.Router();
 const Users = require("../../models/users");
 const Posts = require("../../models/posts");
 const jwt = require("jsonwebtoken");
-const secretKey = require("../../config/secretKey").secretKey;
+const secretKey = require("../../config/index").secretKey;
 // const authMiddleware = require("../middlewares/auth-middleware");
 
 //회원가입(중복검사 + 규칙체크)
