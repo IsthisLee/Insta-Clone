@@ -11,33 +11,50 @@ router
     //메인 페이지 요청 API
     .get(async (req, res) => {
         try {
-            let commentResult = [];
-            let count = 0;
-            let comparePostId;
             const postList = await Posts.find().sort("-postId");
-            const commentList = await Comments.find().sort("postId");
+            const commentList = await Comments.find().sort("-postId");
+            let commentResult = [];
+            let finalComment = [];
+            let count = -1;
+            let count2 = 0;
+            let comparePostId;
             //각 게시글당 댓글 2개씩만 뽑아내기
+
+            //postId별로 2차원 배열 생성해서 배열 하나에 전부 집어넣음.
             commentList.forEach((comment) => {
                 if (comparePostId !== comment.postId) {
                     comparePostId = comment.postId;
-                    count = 0;
-                } else if (comparePostId === comment.postId && count < 2) {
-                    commentResult.push(comment);
                     count++;
+                    commentResult[count] = new Array(comment);
+                } else if (comparePostId === comment.postId) {
+                    commentResult[count].push(comment);
                 }
             });
-            //최신 댓글이 위로 오게 정렬(뽑아낸 댓글 중에서만,,,,,ㅠ)
-            commentResult.sort((a, b) => {
-                if (a.commentId > b.commentId) {
-                    return -1;
-                }
-                if (a.commentId < b.commentId) {
-                    return 1;
-                }
-                return 0;
+            //2차원 배열들 최신 날짜순 정렬
+            commentResult.map((i) =>
+                i.sort((a, b) => {
+                    if (a.commentId > b.commentId) {
+                        return -1;
+                    }
+                    if (a.commentId < b.commentId) {
+                        return 1;
+                    }
+                    return 0;
+                })
+            );
+            //각 2차원 배열별로 위에서 2개씩만(최신순) 뽑아서 새로운 배열 생성
+            commentResult.forEach((i) => {
+                count2 = 0;
+                i.forEach((i) => {
+                    if (count2 < 2) {
+                        count2++;
+                        finalComment.push(i);
+                    }
+                    return;
+                });
             });
 
-            res.json({ postlist: postList, commentlist: commentResult });
+            res.json({ postlist: postList, commentlist: finalComment });
         } catch {
             res.status(400).json({
                 errorMessage: "메인페이지 데이터 요청 오류 발생",
