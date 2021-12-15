@@ -1,9 +1,8 @@
-const { Route53Resolver } = require("aws-sdk");
 const express = require("express");
 const multer = require("multer");
 const router = express.Router();
 const Posts = require("../../models/posts");
-//const Comments = require("../../models/comments");
+const Comments = require("../../models/comments");
 const upload = require("../middlewares/multer");
 
 router
@@ -13,9 +12,9 @@ router
     .get(async (req, res) => {
         try {
             const postList = await Posts.find().sort("-postId");
-            //const commentList = await Comments.find().sort("-commentId");
+            const commentList = await Comments.find().sort("commentId");
 
-            res.json({ postlist: postList, commentlist: "추가예정" });
+            res.json({ postlist: postList, commentlist: commentList });
         } catch {
             res.status(400).json({
                 errorMessage: "메인페이지 데이터 요청 오류 발생",
@@ -126,12 +125,12 @@ router.patch("/like/postlist/:postId", async (req, res) => {
             const change = post.likePerson.filter((id) => id !== userId);
             post.likePerson = change;
             post.likeCnt--;
-            post.save();
+            await post.save();
             return res.send("좋아요 취소");
         }
         post.likePerson.push(userId);
         post.likeCnt++;
-        post.save();
+        await post.save();
         return res.send("좋아요 추가");
     } catch {
         res.status(400).json({
