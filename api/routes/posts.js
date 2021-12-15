@@ -114,6 +114,55 @@ router
         }
     });
 
+router.patch("/like/postlist/:postId", async (req, res) => {
+    const { postId } = req.params;
+    const { userId } = req.body;
+
+    try {
+        const post = await Posts.findOne({ postId: postId });
+        const check = post.likePerson.filter((id) => id === userId);
+
+        if (check[0]) {
+            const change = post.likePerson.filter((id) => id !== userId);
+            post.likePerson = change;
+            post.likeCnt--;
+            post.save();
+            return res.send("좋아요 취소");
+        }
+        post.likePerson.push(userId);
+        post.likeCnt++;
+        post.save();
+        return res.send("좋아요 추가");
+    } catch {
+        res.status(400).json({
+            errorMessage: "좋아요 오류 발생",
+        });
+    }
+});
+
+// router.post("/like/postlist/:postId", async (req, res) => {
+//     const { postId } = req.params;
+//     const { userId } = req.body;
+
+//     try {
+//         const post = await Posts.findOne({ postId: postId });
+//         let check = false;
+//         post.likePerson.forEach((userId0) => {
+//             if (userId0 === userId) return (check = true);
+//         });
+//         if (!check) {
+//             post.likePerson.push(userId);
+//             post.save();
+//             return res.send("좋아요 성공");
+//         }
+//         return res.send("이미 좋아요를 하였습니다.");
+//     } catch {
+//         res.status(400).json({
+//             errorMessage: "좋아요 오류 발생",
+//         });
+//     }
+// });
+
 //초안. 파일 업로드 API 따로 구성하기. => 게시글 API에 하나로 합쳐버림
 
 // router.post("/upload", async (req, res) => {
