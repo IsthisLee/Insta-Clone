@@ -125,10 +125,12 @@ router.patch("/like/postlist/:postId", async (req, res) => {
         if (check[0]) {
             const change = post.likePerson.filter((id) => id !== userId);
             post.likePerson = change;
+            post.likeCnt--;
             post.save();
             return res.send("좋아요 취소");
         }
         post.likePerson.push(userId);
+        post.likeCnt++;
         post.save();
         return res.send("좋아요 추가");
     } catch {
