@@ -13,7 +13,7 @@ router
         try {
             const postList = await Posts.findOne({ postId: postId });
             const commentList = await Comments.find({ postId: postId }).sort(
-                "commentId"
+                "-commentId"
             );
             res.json({ postlist: postList, commentlist: commentList });
         } catch {
@@ -39,7 +39,6 @@ router
             //게시글 db의 댓글 Count값 변경
             const comments = await Comments.find({ postId: postId });
             post.commentCnt = comments.length;
-            console.log("여기");
             await post.save();
             return res.send();
         } catch {

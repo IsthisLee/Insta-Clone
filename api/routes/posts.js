@@ -11,10 +11,33 @@ router
     //메인 페이지 요청 API
     .get(async (req, res) => {
         try {
+            let commentResult = [];
+            let count = 0;
+            let comparePostId;
             const postList = await Posts.find().sort("-postId");
-            const commentList = await Comments.find().sort("commentId");
+            const commentList = await Comments.find().sort("postId");
+            //각 게시글당 댓글 2개씩만 뽑아내기
+            commentList.forEach((comment) => {
+                if (comparePostId !== comment.postId) {
+                    comparePostId = comment.postId;
+                    count = 0;
+                } else if (comparePostId === comment.postId && count < 2) {
+                    commentResult.push(comment);
+                    count++;
+                }
+            });
+            //최신 댓글이 위로 오게 정렬(뽑아낸 댓글 중에서만,,,,,ㅠ)
+            commentResult.sort((a, b) => {
+                if (a.commentId > b.commentId) {
+                    return -1;
+                }
+                if (a.commentId < b.commentId) {
+                    return 1;
+                }
+                return 0;
+            });
 
-            res.json({ postlist: postList, commentlist: commentList });
+            res.json({ postlist: postList, commentlist: commentResult });
         } catch {
             res.status(400).json({
                 errorMessage: "메인페이지 데이터 요청 오류 발생",
@@ -24,10 +47,11 @@ router
 
     //게시글 업로드 API
     .post(async (req, res) => {
-        const userId = "rjsgmldnwn@gmail.com";
+        const userId = "rjsgmldnwn@gmail.com",
+            nickname = "거거거니니니";
 
         upload(req, res, async (err) => {
-            const { nickname, content } = req.body;
+            const { content } = req.body;
 
             try {
                 const imgUrl = req.file.path;
