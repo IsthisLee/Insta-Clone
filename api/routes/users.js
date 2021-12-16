@@ -134,7 +134,7 @@ router.post("/userlist/login", async (req, res) => {
             },
             secretKey,
             {
-                expiresIn: expireToken, //Cookie에 expire가 있어서 Token expire는 안 먹음
+                expiresIn: "30m", //Cookie에도 expire가 있어서 Token expire랑 이중으로 expire설정돼버림
             }
         ); //토큰생성
         console.log("토큰생성완료");
