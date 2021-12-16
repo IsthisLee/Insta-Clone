@@ -27,8 +27,8 @@ router
     .post(async (req, res) => {
         const { postId } = req.params;
         const { comment } = req.body;
-        const userId = "rjsgmldnwn@gmail.com",
-            nickname = "거니";
+        const userId = res.locals.userId,
+            nickname = res.locals.nickname;
 
         try {
             const post = await Posts.findOne({ postId: postId });
@@ -55,7 +55,7 @@ router
     .put(async (req, res) => {
         const { postId, commentId } = req.params;
         const { comment } = req.body;
-        const userId = "rjsgmldnwn@gmail.com";
+        const userId = res.locals.userId;
 
         try {
             //본인 댓글 여부
@@ -93,7 +93,7 @@ router
     //댓글 삭제 API
     .delete(async (req, res) => {
         const { postId, commentId } = req.params;
-        const userId = "rjsgmldnwn@gmail.com";
+        const userId = res.locals.userId;
 
         try {
             //본인 댓글 여부
