@@ -6,15 +6,14 @@ const _storage = multer.diskStorage({
         cb(null, "uploads/");
     },
     filename: (req, file, cb) => {
-
         const type = file.mimetype.split("/")[1];
-        let filename = Date.now() + file.fieldname + "." + type;
+        let filename = new Date() + file.fieldname + "." + type;
+
         cb(null, filename);
     },
 });
 
 const fileFilter = (req, file, cb) => {
-
     if (file) {
         const type = file.mimetype.split("/")[1];
         if (
