@@ -7,7 +7,19 @@ const _storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const type = file.mimetype.split("/")[1];
-        let filename = new Date() + file.fieldname + "." + type;
+        let filename = Date.now() + file.fieldname + "-0." + type;
+        //파일 존재 여부 확인 후 이름 변경
+        checkFile = () => {
+            let fs = require("fs");
+            let res = fs.existsSync(`uploads/${filename}`);
+            if (res) {
+                let a = filename.split("-");
+                let b = Number(a[1].split(".")[0]);
+                filename = `${file.fieldname}-${b + 1}.${type}`;
+                checkFile();
+            }
+        };
+        checkFile();
 
         cb(null, filename);
     },
