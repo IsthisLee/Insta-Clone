@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 
+const cookieParser = require("cookie-parser");
+
+app.use(cookieParser());
 const connect = require("./models");
 connect();
 
@@ -15,5 +18,5 @@ const index = require("./api/routes");
 app.use("/api", index);
 
 app.listen(config.port, () => {
-  console.log(`listening at http://localhost:${config.port}`);
+    console.log(`listening at http://localhost:${config.port}`);
 });

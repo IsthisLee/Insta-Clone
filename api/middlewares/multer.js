@@ -6,6 +6,7 @@ const _storage = multer.diskStorage({
         cb(null, "uploads/");
     },
     filename: (req, file, cb) => {
+
         const type = file.mimetype.split("/")[1];
         let filename = Date.now() + file.fieldname + "." + type;
         cb(null, filename);
@@ -13,6 +14,7 @@ const _storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
+
     if (file) {
         const type = file.mimetype.split("/")[1];
         if (
