@@ -137,7 +137,7 @@ router.post("/userlist/login", async (req, res) => {
             }
         ); //토큰생성
         console.log("토큰생성완료");
-        res.cookie("authCookie", token, { maxAge: 1800000, httpOnly: true });
+        // res.cookie("authCookie", token, { maxAge: 1800000, httpOnly: true });
         res.status(201).json({
             result: "success",
             token,
