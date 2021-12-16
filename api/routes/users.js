@@ -150,16 +150,20 @@ router.post("/userlist/login", async (req, res) => {
 });
 
 //유저 프로필 페이지
-router.get("/userProfile/:userId", async (req, res, next) => {
-    try {
-        const { userId } = req.params;
-        const userPosts = await Posts.find({ userId }).sort("-createdAt");
-        console.log(`유저프로필페이지 : ${userPosts}`);
-        res.json({ userPosts });
-    } catch (error) {
-        res.render(`유저 프로필 페이지 에러`);
+router.get(
+    "/userProfile/:userId",
+    checkTokenInCookie,
+    async (req, res, next) => {
+        try {
+            const { userId } = req.params;
+            const userPosts = await Posts.find({ userId }).sort("-createdAt");
+            console.log(`유저프로필페이지 : ${userPosts}`);
+            res.json({ userPosts });
+        } catch (error) {
+            res.render(`유저 프로필 페이지 에러`);
+        }
     }
-});
+);
 
 router.get("/me", checkTokenInCookie, async (req, res) => {
     // 해당 경로로 들어오는 경우에만 authMiddleware 붙음

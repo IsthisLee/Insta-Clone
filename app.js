@@ -1,5 +1,14 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
+
+const corsOptions = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Request-Method": "POST, GET, DELETE, PATCH, PUT",
+    "Access-Control-Request-Headers": "X-Custom-Header",
+    credentials: true,
+};
+app.use(cors());
 
 const cookieParser = require("cookie-parser");
 
