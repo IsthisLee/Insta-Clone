@@ -133,7 +133,7 @@ router.post("/userlist/login", async (req, res) => {
             },
             secretKey,
             {
-                expiresIn: "30m", //Cookie에도 expire가 있어서 Token expire랑 이중으로 expire설정돼버림
+                expiresIn: "24h", //Cookie에도 expire가 있어서 Token expire랑 이중으로 expire설정돼버림
             }
         ); //토큰생성
         console.log("토큰생성완료");
@@ -156,9 +156,11 @@ router.get(
     async (req, res, next) => {
         try {
             const { userId } = req.params;
-            const userPosts = await Posts.find({ userId }).sort("-createdAt");
-            console.log(`유저프로필페이지 : ${userPosts}`);
-            res.json({ userPosts });
+            const userPosts = await Posts.find({ userId }).sort("-postId");
+            let arr = [];
+            userPosts.forEach((i) => arr.push(i.imgUrl));
+            console.log(`유저프로필페이지 : ${userPosts}, 게시 사진 : ${arr}`);
+            res.json({ userPosts: userPosts, img: arr });
         } catch (error) {
             res.render(`유저 프로필 페이지 에러`);
         }
