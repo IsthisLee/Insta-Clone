@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const secretKey = require("../../config").secretKey;
 const expireToken = require("../../config").expiresIn;
 const bcrypt = require("bcrypt");
-const saltRounds = require("../../config").SALTROUNDS;
+const saltRounds = require("../../config").saltRounds;
 
 const checkTokenInCookie = require("../middlewares/authUseCookie");
 
@@ -77,9 +77,8 @@ router.post("/userlist/register", async (req, res) => {
             return;
         }
         var plainTextPassword = password;
-
         //비밀번호 해쉬처리
-        const hash = bcrypt.hashSync(plainTextPassword, saltRounds);
+        const hash = bcrypt.hashSync(plainTextPassword, +saltRounds);
 
         //유저 등록
         const user = new Users({
