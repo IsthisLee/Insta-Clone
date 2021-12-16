@@ -3,10 +3,10 @@ const router = express.Router();
 const Users = require("../../models/users");
 const Posts = require("../../models/posts");
 const jwt = require("jsonwebtoken");
-const secretKey = require("../../config/index").secretKey;
-const expireToken = require("../../config/index").expiresIn;
+const secretKey = require("../../config").secretKey;
+const expireToken = require("../../config").expiresIn;
 const bcrypt = require("bcrypt");
-const saltRounds = 10;
+const saltRounds = require("../../config").SALTROUNDS;
 
 const checkTokenInCookie = require("../middlewares/authUseCookie");
 
