@@ -3,7 +3,7 @@ dotenv.config();
 
 module.exports = {
     port: process.env.PORT,
-
+    saltRounds: process.env.SALTROUNDS,
     secretKey: process.env.secretKey, // 원하는 시크릿 키
     expiresIn: process.env.expiresIn, // 토큰 유효 기간
 };
