@@ -6,8 +6,8 @@ const posts = require("./posts");
 const comments = require("./comments");
 const authCookie = require("../middlewares/authUseCookie");
 
-router.use("/", authCookie, users);
+router.use("/", users);
 router.use("/", authCookie, comments);
-router.use("/", posts);
+router.use("/", authCookie, posts);
 
 module.exports = router;
