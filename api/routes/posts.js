@@ -5,7 +5,6 @@ const Posts = require("../../models/posts");
 const Comments = require("../../models/comments");
 const upload = require("../middlewares/multer");
 
-
 router
     .route("/postlist")
 
@@ -65,8 +64,8 @@ router
 
     //게시글 업로드 API
     .post(async (req, res) => {
-        const userId = "rjsgmldnwn@gmail.com",
-            nickname = "거거거니니니";
+        const userId = res.locals.userId,
+            nickname = res.locals.nickname;
 
         upload(req, res, async (err) => {
             const { content } = req.body;
@@ -94,7 +93,7 @@ router
     .put(async (req, res) => {
         const { postId } = req.params;
         const post = await Posts.findOne({ postId: postId });
-        const userId = "rjsgmldnwn@gmail.com";
+        const userId = res.locals.userId;
 
         if (post.userId !== userId) {
             return res.status(412).json({
@@ -136,7 +135,7 @@ router
     //게시글 삭제 API
     .delete(async (req, res) => {
         const { postId } = req.params;
-        const userId = "rjsgmldnwn@gmail.com";
+        const userId = res.locals.userId;
 
         try {
             const post = await Posts.findOne({ postId: postId });
@@ -157,7 +156,7 @@ router
 
 router.patch("/like/postlist/:postId", async (req, res) => {
     const { postId } = req.params;
-    const { userId } = req.body;
+    const userId = res.locals.userId;
 
     try {
         const post = await Posts.findOne({ postId: postId });

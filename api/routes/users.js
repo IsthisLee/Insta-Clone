@@ -9,7 +9,6 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const checkTokenInCookie = require("../middlewares/authUseCookie");
-// const authMiddleware = require("../middlewares/auth-middleware");
 
 //회원가입(중복검사 + 규칙체크)
 router.post("/userlist/register", async (req, res) => {
@@ -135,19 +134,15 @@ router.post("/userlist/login", async (req, res) => {
             },
             secretKey,
             {
-                expiresIn: expireToken,
+                expiresIn: expireToken, //Cookie에 expire가 있어서 Token expire는 안 먹음
             }
         ); //토큰생성
-        console.log(`토큰생성완료 : ${token}`);
-        res.cookie("authCookie", token, { maxAge: 900000, httpOnly: true });
+        console.log("토큰생성완료");
+        res.cookie("authCookie", token, { maxAge: 1800000, httpOnly: true });
         res.status(201).json({
             result: "success",
             token,
         });
-        // res.send({
-        //     token,
-        //     result: "success",
-        // });
     } catch (error) {
         res.status(400).send({
             errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
@@ -167,13 +162,11 @@ router.get("/userProfile/:userId", async (req, res, next) => {
     }
 });
 
-router.get("/users/me", checkTokenInCookie, async (req, res) => {
+router.get("/me", checkTokenInCookie, async (req, res) => {
     // 해당 경로로 들어오는 경우에만 authMiddleware 붙음
     let userId = res.locals.userId;
     let nickname = res.locals.nickname;
     let userIdCnt = res.locals.userIdCnt;
-
-    console.log(userId);
 
     res.send({ userId, nickname, userIdCnt });
 });
