@@ -74,7 +74,7 @@ router
                 if (err) {
                     return res.json({ success: false, err });
                 }
-                const imgUrl = req.file.path;
+                const imgUrl = `http://13.125.149.78/${req.file.path}`;
                 await Posts.create({ userId, nickname, imgUrl, content });
                 res.send();
             } catch {
@@ -145,6 +145,7 @@ router
                 });
             }
             await Posts.deleteOne({ postId: postId });
+            await Comments.deleteMany({ postId: postId });
             res.send();
         } catch {
             res.status(400).json({
