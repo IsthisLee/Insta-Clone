@@ -2,10 +2,16 @@ const jwt = require("jsonwebtoken");
 const secretKey = require("../../config/index").secretKey;
 require("dotenv").config();
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     try {
         console.log("토큰+쿠키 미들웨어 들옴");
-        const clientToken = req.cookies.authCookie;
+        //header로 받아서(프론트용)
+        const clientToken = await req.headers["authorization"];
+        //const { authorization } = req.headers;
+
+        //쿠키를 쏴줄 때(포스트맨)
+        //const clientToken = req.cookies.authCookie;
+
         const decoded = jwt.verify(clientToken, secretKey);
         if (decoded) {
             res.locals.userId = decoded.userId;
