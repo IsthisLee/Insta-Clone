@@ -32,7 +32,7 @@ const fileFilter = (req, file, cb) => {
             type !== "jpeg" &&
             type !== "jpg" &&
             type !== "png" &&
-            type !== "mp4"
+            type !== "gif"
         ) {
             return cb({ msg: "파일 형식이 올바르지 않습니다." }, false);
         }

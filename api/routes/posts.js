@@ -71,11 +71,10 @@ router
             const { content } = req.body;
 
             try {
-                const imgUrl = req.file.path;
-
                 if (err) {
                     return res.json({ success: false, err });
                 }
+                const imgUrl = req.file.path;
                 await Posts.create({ userId, nickname, imgUrl, content });
                 res.send();
             } catch {
