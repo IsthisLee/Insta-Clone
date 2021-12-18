@@ -93,7 +93,11 @@ Insta-clone
 <br/>
 <br/>
 
-<p align="center"><img src=></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/57748284/146632098-aae5ccd4-b5bd-48bd-ab4c-6d9cf674c492.png"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/57748284/146632124-1acb5461-4eb7-4078-84fe-ff89c9b585c1.png"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/57748284/146632121-4b0d7c8a-8c41-4f14-baba-8ff69310e227.png"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/57748284/146632157-923ca9bb-90b2-44a6-a127-4ac0761cf63b.png"></p>
+
 
 <br/>
 
