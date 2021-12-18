@@ -55,15 +55,15 @@ Insta-clone
 ├─ node_modules
 │  
 │  
-├─ api   ─ middleWare
-│          └─ authUseCookie.js
-│          └─ multer.js
-│         
-│        ─ routes
-│          └─ comments.js
-│          └─ index.js
-│          └─ posts.js
-│          └─ users.js
+├─ api   ├─ middleWare
+│        │  └─ authUseCookie.js
+│        │  └─ multer.js
+│        │ 
+│        ├─ routes
+│           └─ comments.js
+│           └─ index.js
+│           └─ posts.js
+│           └─ users.js
 │  
 │  
 ├─ models
