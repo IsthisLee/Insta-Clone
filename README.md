@@ -27,9 +27,8 @@
 
 <br/>
 
-🪄 사용한 패키지 및 CSS  
+🪄 사용한 라이브러리 
 -----------------
-- **express**  　　　=> 웹 프레임워크
 - **mongoose**　　=> 비관계형 데이터베이스인 Mongo DB를 편리하게 다룰 수 있는 ODM
 - **cors**　　=> cors 해결을 위한 응답 헤더를 쉽게 추가해주는 module
 - **nodemon**　　=> 파일 수정시 자동으로 서버를 재시작
@@ -88,16 +87,6 @@ Insta-clone
 └─ .gitignore
 └─ .env
 ```
-
-<br/>
-
-💾 DB ERD
------------------
-
-<br/>
-<br/>
-
-<p align="center"><img src=></p>
 
 <br/>
 
